@@ -26,3 +26,4 @@ C:\Users\william.aniceto\source\repos\- Curso Alura\ScreenSound\ScreenSound\obj\
 C:\Users\william.aniceto\source\repos\- Curso Alura\ScreenSound\ScreenSound\obj\Debug\net8.0\ScreenSound.pdb
 C:\Users\william.aniceto\source\repos\- Curso Alura\ScreenSound\ScreenSound\obj\Debug\net8.0\ScreenSound.genruntimeconfig.cache
 C:\Users\william.aniceto\source\repos\- Curso Alura\ScreenSound\ScreenSound\obj\Debug\net8.0\ref\ScreenSound.dll
+C:\Users\william.aniceto\source\repos\- Curso Alura\ScreenSound\ScreenSound\obj\Debug\net8.0\ScreenSound.sourcelink.json

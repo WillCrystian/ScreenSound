@@ -2,8 +2,10 @@
 using System.Data;
 using System.Diagnostics;
 
-List<string> bandas = new List<string>();
-
+//List<string> bandasRegistradas = new List<string> { "U2", "Ramones"};
+Dictionary<string, List<string>> bandasRegistradas = new Dictionary<string, List<string>>();
+bandasRegistradas.Add("U2", new List<string>());
+bandasRegistradas.Add("Ira", new List<string>());
 void ExibirLogo()
 {
     string logo = @"
@@ -23,6 +25,8 @@ void ExibirMenu()
     Console.WriteLine("Digite 4 para avaliar uma banda");
     Console.WriteLine("Digite 5 para exibir detalhes de uma banda");
     Console.WriteLine("Digite -1 para sair");
+
+    Console.Write("Digite sua resposta: ");
     string? resposta =  Console.ReadLine();
 
     switch (resposta)
@@ -55,21 +59,53 @@ void RegistrarUmaBanda()
 {
     ExibirTitulo("Qual banda deseja registrar?");
     string resposta = Console.ReadLine()!;
-    bandas.Add(resposta);
-    
+    bandasRegistradas.Add(resposta, new List<string>());
 
-    Thread.Sleep(5000);
+    Console.WriteLine($"\nBanda {resposta} registrada com sucesso.");
+
+    Thread.Sleep(4000);
     ExibirMenu();
 }
 
 void RegistrarAlbumDaBanda()
-{
+{    
+    ExibirTitulo("Registrar álbum de uma banda.");
 
+    Console.Write("Qual banda você deseja registrar um álbum? ");
+    string banda = Console.ReadLine()!;
+
+    var bd = bandasRegistradas.Keys.Where(b => b == banda).Count();
+
+    if (bd > 0)
+    {
+        Console.Write("Qual álbum deseja registrar? ");
+        string album = Console.ReadLine()!;
+
+        bandasRegistradas[banda].Add(album);
+
+        Console.WriteLine($"\nO álbum {album} da banda {banda} foi registrado com sucesso.");
+    }
+    else
+    {
+        Console.WriteLine($"\nNão foi encontrada a banda {banda}.");
+    }
+
+    Console.WriteLine("\nAperte qualquer tecla para voltar ao menu inicial.");
+    Console.ReadKey();
+    ExibirMenu();
 }
 
 void MostrarTodasAsBandas()
 {
-
+    ExibirTitulo("Mostrar todas as bandas.");
+    Console.WriteLine();
+    foreach (var banda in bandasRegistradas.Keys)
+    {
+        Console.WriteLine($"- {banda}");
+    }
+    Console.WriteLine("\nAperte qualquer tecla para voltar ao menu inicial.");
+    Console.ReadKey();
+    ExibirMenu() ;    
 }
 
 void AvaliarBanda()
@@ -99,6 +135,8 @@ void ExibirTitulo(string titulo)
     Console.WriteLine(asterisco.PadLeft(tamanhoTitulo, '*'));
     Console.WriteLine();
 }
+
+
 
 ExibirMenu();
 
