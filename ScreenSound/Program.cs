@@ -1,11 +1,19 @@
 ﻿using ScreenSound;
 using System.Data;
 using System.Diagnostics;
+using ScreenSound.Modelos;
 
-//List<string> bandasRegistradas = new List<string> { "U2", "Ramones"};
-Dictionary<string, List<string>> bandasRegistradas = new Dictionary<string, List<string>>();
-bandasRegistradas.Add("U2", new List<string>());
-bandasRegistradas.Add("Ira", new List<string> { "Amanhã", "Somos nós"});
+Banda ira = new("Ira");
+ira.AdicionarNota(10);
+ira.AdicionarNota(8);
+ira.AdicionarNota(6);
+Banda beatles = new("The Beatles");
+
+Dictionary<string, Banda> bandasRegistradas = new();
+bandasRegistradas.Add(ira.Nome, ira);
+bandasRegistradas.Add(beatles.Nome, beatles);
+
+
 void ExibirLogo()
 {
     string logo = @"
@@ -59,7 +67,9 @@ void RegistrarUmaBanda()
 {
     ExibirTitulo("Qual banda deseja registrar?");
     string resposta = Console.ReadLine()!;
-    bandasRegistradas.Add(resposta, new List<string>());
+
+    Banda banda = new(resposta);
+    bandasRegistradas.Add(resposta, banda);
 
     Console.WriteLine($"\nBanda {resposta} registrada com sucesso.");
 
@@ -72,22 +82,22 @@ void RegistrarAlbumDaBanda()
     ExibirTitulo("Registrar álbum de uma banda.");
 
     Console.Write("Qual banda você deseja registrar um álbum? ");
-    string banda = Console.ReadLine()!;
+    string nomeDaBanda = Console.ReadLine()!;
 
-    var bd = bandasRegistradas.Keys.Where(b => b == banda).Count();
-
-    if (bd > 0)
+    if (bandasRegistradas.ContainsKey(nomeDaBanda))
     {
         Console.Write("Qual álbum deseja registrar? ");
-        string album = Console.ReadLine()!;
+        string nomeDoAlbum = Console.ReadLine()!;
 
-        bandasRegistradas[banda].Add(album);
+        Banda banda = bandasRegistradas[nomeDaBanda];
+        Album album = new(nomeDoAlbum);
+        banda.AdicionarAlbum(album);
 
-        Console.WriteLine($"\nO álbum {album} da banda {banda} foi registrado com sucesso.");
+        Console.WriteLine($"\nO álbum {nomeDoAlbum} da banda {nomeDaBanda} foi registrado com sucesso.");
     }
     else
     {
-        Console.WriteLine($"\nNão foi encontrada a banda {banda}.");
+        Console.WriteLine($"\nNão foi encontrada a banda {nomeDaBanda}.");
     }
 
     Console.WriteLine("\nAperte qualquer tecla para voltar ao menu inicial.");
@@ -110,20 +120,47 @@ void MostrarTodasAsBandas()
 
 void AvaliarBanda()
 {
+    ExibirTitulo("Avaliar banda");
 
+    Console.Write("Digite o nome da nada que deseja avaliar?: ");
+    string nomeDaBanda = Console.ReadLine()!;
+
+    if (bandasRegistradas.ContainsKey(nomeDaBanda))
+    {
+        Console.WriteLine($"Qual a nota que a banda {nomeDaBanda} merece?: ");
+        int nota = int.Parse(Console.ReadLine()!);
+
+        Banda banda = bandasRegistradas[nomeDaBanda];
+        banda.AdicionarNota(nota);
+
+        Console.WriteLine($"\nA nota {nota} foi registrada com sucesso para a banda {nomeDaBanda}.");
+        Thread.Sleep(2000);
+        ExibirMenu();
+    }
+    else
+    {
+        Console.WriteLine($"A banda {nomeDaBanda} não foi encontrada.");
+        Console.WriteLine("\nAperte qualquer tecla para voltar ao menu inicial.");
+        Console.ReadKey();
+        ExibirMenu();
+    }
 }
 
 void DetalhesDeUmaBanda(){
     ExibirTitulo("Detalhe de uma banda");
 
     Console.Write($"\nQual banda deseja ver detalhes? ");
-    string banda = Console.ReadLine()!;
+    string nomeDaBanda = Console.ReadLine()!;
 
-    Console.WriteLine($"Banda {banda}");
-    foreach(var b in bandasRegistradas[banda])
+    if (bandasRegistradas.ContainsKey(nomeDaBanda))
     {
-        Console.WriteLine($"Álbum: {b}");
+        Banda banda = bandasRegistradas[nomeDaBanda];
+        Console.WriteLine($"\nA média da banda {nomeDaBanda} é de {banda.Media}");
     }
+    else
+    {
+        Console.WriteLine($"A banda {nomeDaBanda} não foi encontrada");
+    }  
 
     Console.WriteLine("\nAperte qualquer tecla para voltar ao menu inicial.");
     Console.ReadKey();
@@ -133,13 +170,16 @@ void DetalhesDeUmaBanda(){
 void FinalizarConsole()
 {
     Console.Clear();
-    Console.WriteLine("Estamos finalizando em 3.");
-    Thread.Sleep(1000);
-    Console.Clear(); 
-    Console.WriteLine("Estamos finalizando em 2.");
+    ExibirLogo();
+    Console.WriteLine("\nEstamos finalizando em 3.");
     Thread.Sleep(1000);
     Console.Clear();
-    Console.WriteLine("Estamos finalizando em 1.");
+    ExibirLogo();
+    Console.WriteLine("\nEstamos finalizando em 2.");
+    Thread.Sleep(1000);
+    Console.Clear();
+    ExibirLogo();
+    Console.WriteLine("\nEstamos finalizando em 1.");
     Thread.Sleep(1000);
 }
 

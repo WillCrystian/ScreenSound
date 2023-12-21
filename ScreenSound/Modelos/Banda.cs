@@ -17,8 +17,8 @@ internal class Banda
     }
 
     public string Nome { get; }
-    public double Medias => notas.Average();
-    public List<Album> Albums => albuns;
+    public double Media => notas.Average();
+    public List<Album> Albuns => albuns;
 
     public void AdicionarAlbum(Album algum)
     {
