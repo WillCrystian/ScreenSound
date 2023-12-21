@@ -5,7 +5,7 @@ using System.Diagnostics;
 //List<string> bandasRegistradas = new List<string> { "U2", "Ramones"};
 Dictionary<string, List<string>> bandasRegistradas = new Dictionary<string, List<string>>();
 bandasRegistradas.Add("U2", new List<string>());
-bandasRegistradas.Add("Ira", new List<string>());
+bandasRegistradas.Add("Ira", new List<string> { "Amanhã", "Somos nós"});
 void ExibirLogo()
 {
     string logo = @"
@@ -114,15 +114,40 @@ void AvaliarBanda()
 }
 
 void DetalhesDeUmaBanda(){
+    ExibirTitulo("Detalhe de uma banda");
+
+    Console.Write($"\nQual banda deseja ver detalhes? ");
+    string banda = Console.ReadLine()!;
+
+    Console.WriteLine($"Banda {banda}");
+    foreach(var b in bandasRegistradas[banda])
+    {
+        Console.WriteLine($"Álbum: {b}");
+    }
+
+    Console.WriteLine("\nAperte qualquer tecla para voltar ao menu inicial.");
+    Console.ReadKey();
+    ExibirMenu();
 
 }
 void FinalizarConsole()
 {
-
+    Console.Clear();
+    Console.WriteLine("Estamos finalizando em 3.");
+    Thread.Sleep(1000);
+    Console.Clear(); 
+    Console.WriteLine("Estamos finalizando em 2.");
+    Thread.Sleep(1000);
+    Console.Clear();
+    Console.WriteLine("Estamos finalizando em 1.");
+    Thread.Sleep(1000);
 }
 
 void OpcaoInvalida(){
-
+    Console.Clear();
+    Console.WriteLine("A opção digitada está inválida.");
+    Thread.Sleep(3000);
+    ExibirMenu();    
 }
 
 void ExibirTitulo(string titulo)
