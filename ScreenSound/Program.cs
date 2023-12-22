@@ -1,13 +1,19 @@
 ﻿using ScreenSound.Modelos;
 using ScreenSound.Menus;
 
-Album album = new("ABC");
+Album album1 = new("ABC");
+album1.AdicionarNota(new Avaliacao(6));
+album1.AdicionarNota(new Avaliacao(10));
+
+Album album2 = new("DEF");
+album2.AdicionarNota(new Avaliacao(8));
+album2.AdicionarNota(new Avaliacao(7));
 
 Banda ira = new("Ira");
 ira.AdicionarNota(new Avaliacao(10));
 ira.AdicionarNota(new Avaliacao(8));
-ira.AdicionarNota(new Avaliacao(6));
-ira.AdicionarAlbum(album);
+ira.AdicionarAlbum(album1);
+ira.AdicionarAlbum(album2);
 
 Banda beatles = new("The Beatles");
 
