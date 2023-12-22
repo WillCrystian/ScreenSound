@@ -14,5 +14,11 @@ namespace ScreenSound.Modelos
         }
 
         public int Nota { get; }
+
+        public static Avaliacao Parse(string s)
+        {
+            int numero = int.Parse(s);
+            return new Avaliacao(numero); 
+        }
     }
 }
