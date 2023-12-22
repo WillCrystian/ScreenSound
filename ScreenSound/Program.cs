@@ -1,19 +1,14 @@
-﻿using ScreenSound;
-using System.Data;
-using System.Diagnostics;
-using ScreenSound.Modelos;
+﻿using ScreenSound.Modelos;
 
 Banda ira = new("Ira");
-ira.AdicionarNota(10);
-ira.AdicionarNota(8);
-ira.AdicionarNota(6);
+ira.AdicionarNota(new Avaliacao(10));
+ira.AdicionarNota(new Avaliacao(8));
+ira.AdicionarNota(new Avaliacao(6));
 Banda beatles = new("The Beatles");
 
 Dictionary<string, Banda> bandasRegistradas = new();
 bandasRegistradas.Add(ira.Nome, ira);
 bandasRegistradas.Add(beatles.Nome, beatles);
-
-
 void ExibirLogo()
 {
     string logo = @"
@@ -127,11 +122,12 @@ void AvaliarBanda()
 
     if (bandasRegistradas.ContainsKey(nomeDaBanda))
     {
+        Banda banda = bandasRegistradas[nomeDaBanda];
+
         Console.WriteLine($"Qual a nota que a banda {nomeDaBanda} merece?: ");
         int nota = int.Parse(Console.ReadLine()!);
-
-        Banda banda = bandasRegistradas[nomeDaBanda];
-        banda.AdicionarNota(nota);
+        Avaliacao n = new Avaliacao(nota);
+        banda.AdicionarNota(n);
 
         Console.WriteLine($"\nA nota {nota} foi registrada com sucesso para a banda {nomeDaBanda}.");
         Thread.Sleep(2000);
@@ -169,18 +165,13 @@ void DetalhesDeUmaBanda(){
 }
 void FinalizarConsole()
 {
-    Console.Clear();
-    ExibirLogo();
-    Console.WriteLine("\nEstamos finalizando em 3.");
-    Thread.Sleep(1000);
-    Console.Clear();
-    ExibirLogo();
-    Console.WriteLine("\nEstamos finalizando em 2.");
-    Thread.Sleep(1000);
-    Console.Clear();
-    ExibirLogo();
-    Console.WriteLine("\nEstamos finalizando em 1.");
-    Thread.Sleep(1000);
+    for (int i = 3; i >= 0; i--)
+    {
+        Console.Clear();
+        ExibirLogo();
+        Console.WriteLine($"\nEstamos finalizando em {i}.");
+        Thread.Sleep(1000);
+    }
 }
 
 void OpcaoInvalida(){
@@ -204,5 +195,3 @@ void ExibirTitulo(string titulo)
 
 
 ExibirMenu();
-
-//234
