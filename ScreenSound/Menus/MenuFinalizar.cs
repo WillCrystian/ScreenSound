@@ -4,7 +4,7 @@ namespace ScreenSound.Menus
 {
     internal class MenuFinalizar : Menu
     {
-        public void Executar(Dictionary<string, Banda> bandasRegistradas)
+        public override void Executar(Dictionary<string, Banda> bandasRegistradas)
         {
             for (int i = 3; i >= 0; i--)
             {

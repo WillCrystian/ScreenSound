@@ -10,6 +10,16 @@ Banda beatles = new("The Beatles");
 Dictionary<string, Banda> bandasRegistradas = new();
 bandasRegistradas.Add(ira.Nome, ira);
 bandasRegistradas.Add(beatles.Nome, beatles);
+
+Dictionary<int, Menu> menuOpcoes = new();
+menuOpcoes.Add(1, new MenuRegistrarUmaBanda());
+menuOpcoes.Add(2, new MenuRegistrarAlbumDaBanda());
+menuOpcoes.Add(3, new MenuMostrarTodasAsBandas());
+menuOpcoes.Add(4, new MenuAvaliarBanda());
+menuOpcoes.Add(5, new MenuDetalhesDeUmaBanda());
+menuOpcoes.Add(-1, new MenuFinalizar());
+
+
 void ExibirMenu()
 {
     Console.Clear();
@@ -22,42 +32,25 @@ void ExibirMenu()
     Console.WriteLine("Digite -1 para sair");
 
     Console.Write("Digite sua resposta: ");
-    string? resposta =  Console.ReadLine();
+    int opcaoSelecionada = int.Parse(Console.ReadLine()!);
 
-    switch (resposta)
+    if (menuOpcoes.ContainsKey(opcaoSelecionada))
     {
-        case "1":
-            MenuRegistrarUmaBanda menu1 = new();
-            menu1.Executar(bandasRegistradas);
+        if (opcaoSelecionada == -1)
+        {
+            Menu menu = menuOpcoes[opcaoSelecionada];
+            menu.Executar(bandasRegistradas);            
+        }
+        else
+        {
+            Menu menu = menuOpcoes[opcaoSelecionada];
+            menu.Executar(bandasRegistradas);
             ExibirMenu();
-            break;
-        case "2":
-            MenuRegistrarAlbumDaBanda menu2 = new();
-            menu2.Executar(bandasRegistradas);
-            ExibirMenu();
-            break;
-        case "3":
-            MenuMostrarTodasAsBandas menu3 = new();
-            menu3.Executar(bandasRegistradas);
-            ExibirMenu();
-            break;
-        case "4":
-            MenuAvaliarBanda menu4 = new();
-            menu4.Executar(bandasRegistradas);
-            ExibirMenu();
-            break;
-        case "5":
-            MenuDetalhesDeUmaBanda menu5 = new();
-            menu5.Executar(bandasRegistradas);
-            ExibirMenu();
-            break;
-        case "-1":
-            MenuFinalizar menu6 = new();
-            menu6.Executar(bandasRegistradas);
-            break;
-        default:
-            OpcaoInvalida();
-            break;
+        }        
+    }
+    else
+    {
+        OpcaoInvalida();
     }
 }
 void OpcaoInvalida(){

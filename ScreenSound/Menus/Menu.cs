@@ -1,7 +1,13 @@
-﻿namespace ScreenSound.Menus;
+﻿using ScreenSound.Modelos;
+
+namespace ScreenSound.Menus;
 
 internal class Menu
 {
+    public virtual void Executar(Dictionary<string, Banda> bandasRegistradas)
+    {
+
+    }
     public void ExibirTitulo(string titulo)
     {
         Console.Clear();
